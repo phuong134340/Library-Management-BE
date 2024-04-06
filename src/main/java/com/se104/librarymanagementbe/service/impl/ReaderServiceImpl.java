@@ -26,10 +26,10 @@ public class ReaderServiceImpl implements ReaderService {
     @Override
     public RestResponse<List<GetListReaderResponse>> getListReader() {
         List<Reader> readers = readerRepository.findAll();
-        return RestResponse.<List<GetListUserResponse>>builder()
+        return RestResponse.<List<GetListReaderResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .data(readers.stream()
-                        .map(user -> mapper.map(readers, GetListReaderResponse.class))
+                        .map(reader -> mapper.map(reader, GetListReaderResponse.class))
                         .collect(Collectors.toList()))
                 .build();
     }
