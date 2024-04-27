@@ -9,27 +9,34 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "books")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
-    @Column(name = "username")
-    private String username;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "fullname")
-    private String fullname;
-
+    @Column(name = "name")
+    private String name;
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+    @Column(name = "author")
+    private String author;
+    @Column(name = "publish_date")
+    private Instant publishDate;
+    @Column(name = "publisher")
+    private String publisher;
+    @Column(name = "price")
+    private long price;
     @CreatedDate
-    @Column(name = "create_at")
-    private Instant creat_at;
+    @Column(name = "created_at")
+    private Instant createdAt;
     @OneToMany(mappedBy = "loan")
     private List<Loan> loans;
+
 }

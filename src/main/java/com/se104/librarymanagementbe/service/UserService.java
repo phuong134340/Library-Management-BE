@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface UserService {
-    public RestResponse<List<GetListUserResponse>> getListUsers();
+    RestResponse<List<GetListUserResponse>> getListUsers();
 
-    public RestResponse<GetOneUserResponse> getOneUser(Long id);
+    RestResponse<GetOneUserResponse> getOneUser(Long id);
 
-    public RestResponse<CreateUserResponse> createUser(CreateUserRequest user);
+    RestResponse<CreateUserResponse> createUser(CreateUserRequest user);
 
-    public RestResponse<UpdateUserResponse> updateUser(UpdateUserRequest user, Long id);
+    RestResponse<UpdateUserResponse> updateUser(UpdateUserRequest user, Long id);
 
-    public void deleteUser(Long id);
+    void deleteUser(Long id);
 }
