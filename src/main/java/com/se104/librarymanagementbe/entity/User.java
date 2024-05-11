@@ -26,10 +26,9 @@ public class User {
     private String password;
     @Column(name = "fullname")
     private String fullname;
-
     @CreatedDate
     @Column(name = "create_at")
-    private Instant creat_at;
-    @OneToMany(mappedBy = "loan")
+    private Instant createdAt;
+    @OneToMany(mappedBy = "user")
     private List<Loan> loans;
 }

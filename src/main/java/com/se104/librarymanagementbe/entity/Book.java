@@ -36,7 +36,7 @@ public class Book {
     @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
-    @OneToMany(mappedBy = "loan")
+    @OneToMany(mappedBy = "book")
     private List<Loan> loans;
 
 }
