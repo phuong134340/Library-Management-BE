@@ -7,7 +7,6 @@ import com.se104.librarymanagementbe.dto.response.CreateUserResponse;
 import com.se104.librarymanagementbe.dto.response.GetListUserResponse;
 import com.se104.librarymanagementbe.dto.response.GetOneUserResponse;
 import com.se104.librarymanagementbe.dto.response.UpdateUserResponse;
-import com.se104.librarymanagementbe.entity.User;
 import com.se104.librarymanagementbe.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -5,13 +5,20 @@ import com.se104.librarymanagementbe.dto.request.CreateBookRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateBookRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.entity.Book;
+import com.se104.librarymanagementbe.entity.Category;
 import com.se104.librarymanagementbe.repository.BookRepository;
+import com.se104.librarymanagementbe.repository.CategoryRepository;
+import com.se104.librarymanagementbe.repository.ConfigLibraryRepository;
 import com.se104.librarymanagementbe.service.BookService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,6 +26,9 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class BookServiceImpl implements BookService {
+    private final ConfigLibraryServiceImpl configLibraryServiceImpl;
+    private final ConfigLibraryRepository configLibraryRepository;
+    private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
     private final ModelMapper mapper;
 
@@ -39,7 +49,22 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public RestResponse<CreateBookResponse> createBook(CreateBookRequest book) {
+        Optional<Category> category = categoryRepository.findById(book.getCategoryId());
+        if(category.isEmpty()){
+            return null;
+        }
+        GetOneConfigLibraryResponse lastConfig = configLibraryServiceImpl.getLastConfig();
+        LocalDateTime publishDate = LocalDateTime.ofInstant(book.getPublishDate(), ZoneOffset.UTC);
+
+        LocalDateTime publishDateValid = publishDate.plusYears(lastConfig.getYearOfPublication());
+
+        Instant now = Instant.now();
+        LocalDateTime currentDate = LocalDateTime.ofInstant(now, ZoneOffset.UTC);
+        if (currentDate.isAfter(publishDateValid)) {
+            return null;
+        }
         Book res = bookRepository.save(mapper.map(book, Book.class));
+        res.setCategory(category.get());
         return RestResponse.<CreateBookResponse>builder()
                 .status(HttpStatus.CREATED.value())
                 .data(mapper.map(res, CreateBookResponse.class))

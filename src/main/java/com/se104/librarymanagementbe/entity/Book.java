@@ -23,6 +23,9 @@ public class Book {
     @Column(name = "name")
     private String name;
     @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author authorId;
+    @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
     @Column(name = "author")
@@ -38,5 +41,4 @@ public class Book {
     private Instant createdAt;
     @OneToMany(mappedBy = "book")
     private List<Loan> loans;
-
 }

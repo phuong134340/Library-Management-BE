@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,5 +42,21 @@ public class ConfigLibraryServiceImpl implements ConfigLibraryService {
                 .status(HttpStatus.CREATED.value())
                 .data(mapper.map(res, CreateConfigLibraryResponse.class))
                 .build();
+    }
+    public GetOneConfigLibraryResponse getLastConfig(){
+        List<ConfigLibrary> listConfig = configLibraryRepository.findAllByOrOrderByCreatedAtDesc();
+        GetOneConfigLibraryResponse res = new GetOneConfigLibraryResponse();
+        if(!listConfig.isEmpty()) {
+            res = mapper.map(listConfig.get(0), GetOneConfigLibraryResponse.class);
+        }
+        else {
+            res.setAgeMin(18);
+            res.setAgeMax(55);
+            res.setCardValidity(6);
+            res.setDayMax(4);
+            res.setLimitBook(5);
+            res.setYearOfPublication(8);
+        }
+        return res;
     }
 }
