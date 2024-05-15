@@ -5,16 +5,20 @@ import com.se104.librarymanagementbe.dto.request.CreateCategoryRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateCategoryRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.service.CategoryService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/categories")
+@Service
+@AllArgsConstructor
 public class CategoryController {
-
+    @Autowired
     private CategoryService categoryService;
 
     @PostMapping

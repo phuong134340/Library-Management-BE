@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface ConfigLibraryRepository extends JpaRepository<ConfigLibrary, Long> {
     //Page<ConfigLibrary> findAllByOrderByCreatedAtDesc(Pageable pageable);
-    List<ConfigLibrary> findAllByOrOrderByCreatedAtDesc();
+    List<ConfigLibrary> findAllByOrderByCreatedAtDesc();
 }

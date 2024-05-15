@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class GetListAuthorResponse {
+    long id;
     String name;
     long age;
     String address;

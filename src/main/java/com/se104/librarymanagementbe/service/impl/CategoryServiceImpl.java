@@ -5,25 +5,23 @@ import com.se104.librarymanagementbe.dto.request.CreateCategoryRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateCategoryRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.entity.Category;
-import com.se104.librarymanagementbe.entity.User;
 import com.se104.librarymanagementbe.repository.CategoryRepository;
 import com.se104.librarymanagementbe.service.CategoryService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
+@AllArgsConstructor
 public abstract class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final ModelMapper mapper;
-
-    public CategoryServiceImpl(CategoryRepository categoryRepository, ModelMapper mapper) {
-        this.categoryRepository = categoryRepository;
-        this.mapper = mapper;
-    }
 
     @Override
     public RestResponse<GetOneCategoryResponse> getOneCategory(Long id) {

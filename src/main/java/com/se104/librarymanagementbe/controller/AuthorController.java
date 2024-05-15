@@ -1,20 +1,25 @@
 package com.se104.librarymanagementbe.controller;
 
 import com.se104.librarymanagementbe.common.RestResponse;
-import com.se104.librarymanagementbe.dto.CreateAuthorRequest;
+import com.se104.librarymanagementbe.dto.request.CreateAuthorRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateAuthorRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.service.AuthorService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/authors")
+@Service
+@AllArgsConstructor
 public class AuthorController {
 
+    @Autowired
     private AuthorService authorService;
     @PostMapping
     public ResponseEntity<RestResponse<CreateAuthorResponse>> createAuthor(@RequestBody CreateAuthorRequest author) {

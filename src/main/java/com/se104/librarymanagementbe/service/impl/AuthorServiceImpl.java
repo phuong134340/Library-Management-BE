@@ -1,27 +1,26 @@
 package com.se104.librarymanagementbe.service.impl;
 
 import com.se104.librarymanagementbe.common.RestResponse;
-import com.se104.librarymanagementbe.dto.CreateAuthorRequest;
+import com.se104.librarymanagementbe.dto.request.CreateAuthorRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateAuthorRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.entity.Author;
 import com.se104.librarymanagementbe.repository.AuthorRepository;
 import com.se104.librarymanagementbe.service.AuthorService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
+@AllArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final ModelMapper mapper;
-
-    public AuthorServiceImpl(AuthorRepository authorRepository, ModelMapper mapper) {
-        this.authorRepository = authorRepository;
-        this.mapper = mapper;
-    }
 
     @Override
     public RestResponse<GetOneAuthorResponse> getOneAuthor(Long id) {
@@ -50,6 +49,19 @@ public class AuthorServiceImpl implements AuthorService {
     public RestResponse<UpdateAuthorResponse> updateAuthor(UpdateAuthorRequest author, Long id) {
         Optional<Author> oldAuthor = authorRepository.findById(id);
         if (oldAuthor.isPresent()) {
+            if(author.getName() != null){
+                oldAuthor.get().setName(author.getName());
+            }
+            if(author.getAge() != 0){
+                oldAuthor.get().setAge(author.getAge());
+            }
+            if(author.getAddress() != null){
+                oldAuthor.get().setAddress(author.getAddress());
+            }
+            if(author.getNumber() != 0){
+                oldAuthor.get().setNumber(author.getNumber());
+            }
+
             authorRepository.save(oldAuthor.get());
             return RestResponse.<UpdateAuthorResponse>builder()
                     .status(HttpStatus.OK.value())

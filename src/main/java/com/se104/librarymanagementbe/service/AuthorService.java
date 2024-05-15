@@ -1,7 +1,7 @@
 package com.se104.librarymanagementbe.service;
 
 import com.se104.librarymanagementbe.common.RestResponse;
-import com.se104.librarymanagementbe.dto.CreateAuthorRequest;
+import com.se104.librarymanagementbe.dto.request.CreateAuthorRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateAuthorRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 

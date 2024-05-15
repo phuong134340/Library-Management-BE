@@ -44,7 +44,7 @@ public class ConfigLibraryServiceImpl implements ConfigLibraryService {
                 .build();
     }
     public GetOneConfigLibraryResponse getLastConfig(){
-        List<ConfigLibrary> listConfig = configLibraryRepository.findAllByOrOrderByCreatedAtDesc();
+        List<ConfigLibrary> listConfig = configLibraryRepository.findAllByOrderByCreatedAtDesc();
         GetOneConfigLibraryResponse res = new GetOneConfigLibraryResponse();
         if(!listConfig.isEmpty()) {
             res = mapper.map(listConfig.get(0), GetOneConfigLibraryResponse.class);
