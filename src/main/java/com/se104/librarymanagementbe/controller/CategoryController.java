@@ -15,8 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/categories")
-@Service
-@AllArgsConstructor
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

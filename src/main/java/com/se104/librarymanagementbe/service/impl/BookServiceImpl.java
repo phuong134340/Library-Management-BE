@@ -10,8 +10,10 @@ import com.se104.librarymanagementbe.repository.BookRepository;
 import com.se104.librarymanagementbe.repository.CategoryRepository;
 import com.se104.librarymanagementbe.repository.ConfigLibraryRepository;
 import com.se104.librarymanagementbe.service.BookService;
+import com.se104.librarymanagementbe.service.ConfigLibraryService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class BookServiceImpl implements BookService {
-    private final ConfigLibraryServiceImpl configLibraryServiceImpl;
+    @Autowired
+    private final ConfigLibraryService configLibraryService;
     private final ConfigLibraryRepository configLibraryRepository;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
@@ -53,7 +56,7 @@ public class BookServiceImpl implements BookService {
         if(category.isEmpty()){
             return null;
         }
-        GetOneConfigLibraryResponse lastConfig = configLibraryServiceImpl.getLastConfig();
+        GetOneConfigLibraryResponse lastConfig = configLibraryService.getLastConfig();
         LocalDateTime publishDate = LocalDateTime.ofInstant(book.getPublishDate(), ZoneOffset.UTC);
 
         LocalDateTime publishDateValid = publishDate.plusYears(lastConfig.getYearOfPublication());

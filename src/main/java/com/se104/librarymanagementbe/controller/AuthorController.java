@@ -15,8 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/authors")
-@Service
-@AllArgsConstructor
 public class AuthorController {
 
     @Autowired

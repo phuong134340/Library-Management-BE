@@ -8,4 +8,5 @@ import com.se104.librarymanagementbe.dto.response.GetOneConfigLibraryResponse;
 public interface ConfigLibraryService {
     RestResponse<GetOneConfigLibraryResponse> getOneConfigLibrary(Long id);
     RestResponse<CreateConfigLibraryResponse> createConfigLibrary(CreateConfigLibraryRequest configLibrary);
+    GetOneConfigLibraryResponse getLastConfig();
 }

@@ -43,6 +43,7 @@ public class ConfigLibraryServiceImpl implements ConfigLibraryService {
                 .data(mapper.map(res, CreateConfigLibraryResponse.class))
                 .build();
     }
+    @Override
     public GetOneConfigLibraryResponse getLastConfig(){
         List<ConfigLibrary> listConfig = configLibraryRepository.findAllByOrderByCreatedAtDesc();
         GetOneConfigLibraryResponse res = new GetOneConfigLibraryResponse();
