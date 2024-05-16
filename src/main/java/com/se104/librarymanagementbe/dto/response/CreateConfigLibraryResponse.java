@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CreateConfigLibraryResponse {
+    long id;
     long ageMax;
     long ageMin;
     long cardValidity;

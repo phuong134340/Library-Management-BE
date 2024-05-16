@@ -2,9 +2,7 @@ package com.se104.librarymanagementbe.controller;
 
 import com.se104.librarymanagementbe.common.RestResponse;
 import com.se104.librarymanagementbe.dto.request.CreateReaderTypeRequest;
-import com.se104.librarymanagementbe.dto.request.CreateUserRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateReaderTypeRequest;
-import com.se104.librarymanagementbe.dto.request.UpdateUserRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.service.ReaderTypeService;
 import org.springframework.beans.factory.annotation.Autowired;

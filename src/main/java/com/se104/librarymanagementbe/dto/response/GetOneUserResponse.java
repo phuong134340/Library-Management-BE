@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class GetOneUserResponse {
+    long id;
     String username;
     String fullname;
 }

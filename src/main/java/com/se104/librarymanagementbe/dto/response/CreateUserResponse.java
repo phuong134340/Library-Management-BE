@@ -9,6 +9,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Data
 public class CreateUserResponse{
+        long id;
         String username;
         String fullname;
 }

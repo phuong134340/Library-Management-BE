@@ -24,12 +24,10 @@ public class Book {
     private String name;
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private Author authorId;
+    private Author author;
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
-    @Column(name = "author")
-    private String author;
     @Column(name = "publish_date")
     private Instant publishDate;
     @Column(name = "publisher")

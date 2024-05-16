@@ -6,5 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class GetOneReaderTypeResponse {
+    long id;
     String name;
 }

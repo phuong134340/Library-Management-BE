@@ -9,6 +9,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Data
 public class CreateBookResponse {
+    long id;
     String name;
     Category category;
     String author;

@@ -6,5 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UpdateCategoryResponse {
+    long id;
     String name;
 }

@@ -5,10 +5,8 @@ import com.se104.librarymanagementbe.dto.request.CreateAuthorRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateAuthorRequest;
 import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.service.AuthorService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

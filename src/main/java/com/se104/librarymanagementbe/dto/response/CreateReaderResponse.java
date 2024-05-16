@@ -8,6 +8,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Data
 public class CreateReaderResponse {
+    long id;
     String name;
     String fullName;
     String readerType;

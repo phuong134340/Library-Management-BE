@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Getter
 public class UpdateUserResponse {
+    long id;
     String fullname;
 }

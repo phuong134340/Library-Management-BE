@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class GetOneReaderResponse {
+    long id;
     String name;
     String fullName;
 }

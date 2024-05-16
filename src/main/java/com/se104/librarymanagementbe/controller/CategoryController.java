@@ -3,12 +3,13 @@ package com.se104.librarymanagementbe.controller;
 import com.se104.librarymanagementbe.common.RestResponse;
 import com.se104.librarymanagementbe.dto.request.CreateCategoryRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateCategoryRequest;
-import com.se104.librarymanagementbe.dto.response.*;
+import com.se104.librarymanagementbe.dto.response.CreateCategoryResponse;
+import com.se104.librarymanagementbe.dto.response.GetListCategoryResponse;
+import com.se104.librarymanagementbe.dto.response.GetOneCategoryResponse;
+import com.se104.librarymanagementbe.dto.response.UpdateCategoryResponse;
 import com.se104.librarymanagementbe.service.CategoryService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "api/categories")
 public class CategoryController {
+    private final CategoryService categoryService;
+
     @Autowired
-    private CategoryService categoryService;
+    public CategoryController( CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @PostMapping
     public ResponseEntity<RestResponse<CreateCategoryResponse>> createCategory(@RequestBody CreateCategoryRequest category) {

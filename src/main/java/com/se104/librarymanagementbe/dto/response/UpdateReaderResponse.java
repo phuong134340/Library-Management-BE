@@ -8,6 +8,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Data
 public class UpdateReaderResponse {
+    long id;
     String fullName;
     Instant dateOfBirth;
     String address;

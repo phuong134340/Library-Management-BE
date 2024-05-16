@@ -8,6 +8,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Data
 public class GetOneLoanResponse {
+    long id;
     Instant startDate;
     Instant endDate;
     String status;
