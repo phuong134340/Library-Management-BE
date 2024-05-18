@@ -6,29 +6,26 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
-import java.util.List;
 
 @Entity
-@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
+@Table(name = "return_book")
 @Setter
+@Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@NoArgsConstructor
+public class Return_Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
-    @Column(name = "username")
-    private String username;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "fullname")
-    private String fullname;
+    @Column(name = "reader_name")
+    private String name;
+    @Column(name = "return_date")
     @CreatedDate
-    @Column(name = "create_at")
-    private Instant createdAt;
-//    @OneToMany(mappedBy = "user")
-//    private List<Loan> loans;
+    private Instant returnDate;
+    @Column(name = "fine")
+    private long fine;
+    @Column(name = "number_of_day")
+    private long number;
 }

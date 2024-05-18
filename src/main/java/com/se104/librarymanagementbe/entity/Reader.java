@@ -45,6 +45,6 @@ public class Reader {
     @LastModifiedDate
     @Column(name = "updated_at")
     private Instant updatedAt;
-    @OneToMany(mappedBy = "reader")
-    private List<Loan> loans;
+//    @OneToMany(mappedBy = "reader")
+//    private List<Loan> loans;
 }

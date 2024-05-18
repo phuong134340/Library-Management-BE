@@ -10,8 +10,8 @@ import java.time.Instant;
 @Data
 public class CreateBookRequest {
     String name;
-    Long categoryId;
-    String author;
+    long categoryId;
+    long authorId;
     Instant publishDate;
     String publisher;
     long price;

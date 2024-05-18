@@ -38,5 +38,7 @@ public class Loan {
     @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
-
+    @ManyToOne
+    @JoinColumn(name = "return_book")
+    private Return_Book returnBook;
 }

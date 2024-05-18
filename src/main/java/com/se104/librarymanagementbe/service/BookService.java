@@ -4,8 +4,10 @@ import com.se104.librarymanagementbe.common.RestResponse;
 import com.se104.librarymanagementbe.dto.request.CreateBookRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateBookRequest;
 import com.se104.librarymanagementbe.dto.response.*;
+import com.se104.librarymanagementbe.entity.Author;
 import com.se104.librarymanagementbe.entity.Book;
 import com.se104.librarymanagementbe.entity.Category;
+import com.se104.librarymanagementbe.repository.AuthorRepository;
 import com.se104.librarymanagementbe.repository.BookRepository;
 import com.se104.librarymanagementbe.repository.CategoryRepository;
 import com.se104.librarymanagementbe.repository.ConfigLibraryRepository;
@@ -29,6 +31,7 @@ public class BookService {
     private final ConfigLibraryService configLibraryService;
     private final ConfigLibraryRepository configLibraryRepository;
     private final CategoryRepository categoryRepository;
+    private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final ModelMapper mapper;
 
@@ -51,6 +54,10 @@ public class BookService {
         if(category.isEmpty()){
             return null;
         }
+        Optional<Author> author = authorRepository.findById(book.getAuthorId());
+        if(author.isEmpty()){
+            return null;
+        }
         GetOneConfigLibraryResponse lastConfig = configLibraryService.getLastConfig();
         LocalDateTime publishDate = LocalDateTime.ofInstant(book.getPublishDate(), ZoneOffset.UTC);
 
@@ -61,11 +68,13 @@ public class BookService {
         if (currentDate.isAfter(publishDateValid)) {
             return null;
         }
-        Book res = bookRepository.save(mapper.map(book, Book.class));
-        res.setCategory(category.get());
+        Book newBook = mapper.map(book, Book.class);
+        newBook.setCategory(category.get());
+        newBook.setAuthor(author.get());
+        bookRepository.save(newBook);
         return RestResponse.<CreateBookResponse>builder()
                 .status(HttpStatus.CREATED.value())
-                .data(mapper.map(res, CreateBookResponse.class))
+                .data(mapper.map(newBook, CreateBookResponse.class))
                 .build();
     }
 
@@ -95,7 +104,7 @@ public class BookService {
         return RestResponse.<List<GetListBookResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .data(books.stream()
-                        .map(user -> mapper.map(books, GetListBookResponse.class))
+                        .map(book -> mapper.map(book, GetListBookResponse.class))
                         .collect(Collectors.toList()))
                 .build();
     }
