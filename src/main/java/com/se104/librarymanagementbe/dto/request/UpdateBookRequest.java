@@ -11,8 +11,8 @@ import java.time.Instant;
 @Data
 public class UpdateBookRequest {
     String name;
-    Category category;
-    Author author;
+    long categoryId;
+    long authorId;
     Instant publishDate;
     String publisher;
     long price;

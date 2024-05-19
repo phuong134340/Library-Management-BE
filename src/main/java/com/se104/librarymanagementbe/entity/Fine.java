@@ -24,4 +24,7 @@ public class Fine {
     private long money;
     @Column(name = "change")
     private long change;
+    @OneToOne
+    @JoinColumn(name = "reader_id", referencedColumnName = "id")
+    private Reader reader;
 }

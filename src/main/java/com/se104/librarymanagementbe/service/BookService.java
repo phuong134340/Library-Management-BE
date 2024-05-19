@@ -81,8 +81,45 @@ public class BookService {
     public RestResponse<UpdateBookResponse> updateBook(UpdateBookRequest book, Long id) {
         Optional<Book> oldBook = bookRepository.findById(id);
         if (oldBook.isPresent()) {
-            oldBook.get()
-                    .setName(book.getName());
+            if(book.getName() != null){
+                oldBook.get().setName(book.getName());
+            }
+            if(book.getCategoryId() != 0){
+                Optional<Category> category = categoryRepository.findById(book.getCategoryId());
+                if(category.isEmpty()){
+                    return null;
+                } else{
+                    oldBook.get().setCategory(category.get());
+                }
+            }
+            if(book.getAuthorId() != 0){
+                Optional<Author> author = authorRepository.findById(book.getCategoryId());
+                if(author.isEmpty()){
+                    return null;
+                }else{
+                    oldBook.get().setAuthor(author.get());
+                }
+            }
+            if(book.getPublishDate() != null){
+                GetOneConfigLibraryResponse lastConfig = configLibraryService.getLastConfig();
+                LocalDateTime publishDate = LocalDateTime.ofInstant(book.getPublishDate(), ZoneOffset.UTC);
+
+                LocalDateTime publishDateValid = publishDate.plusYears(lastConfig.getYearOfPublication());
+
+                Instant now = Instant.now();
+                LocalDateTime currentDate = LocalDateTime.ofInstant(now, ZoneOffset.UTC);
+                if (currentDate.isAfter(publishDateValid)) {
+                    return null;
+                }else{
+                    oldBook.get().setPublishDate(book.getPublishDate());
+                }
+            }
+            if(book.getPublisher() != null){
+                oldBook.get().setPublisher(book.getPublisher());
+            }
+            if(book.getPrice() != 0){
+                oldBook.get().setPrice(book.getPrice());
+            }
             bookRepository.save(oldBook.get());
             return RestResponse.<UpdateBookResponse>builder()
                     .status(HttpStatus.OK.value())

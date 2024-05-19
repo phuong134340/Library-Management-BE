@@ -20,13 +20,13 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reader_id")
     private Reader reader;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
     @Column(name = "start_date")
@@ -38,7 +38,7 @@ public class Loan {
     @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
-    @ManyToOne
-    @JoinColumn(name = "return_book")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "return_book_id")
     private Return_Book returnBook;
 }

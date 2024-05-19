@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -28,4 +29,6 @@ public class Return_Book {
     private long fine;
     @Column(name = "number_of_day")
     private long number;
+//    @OneToMany(mappedBy = "return_book")
+//    private List<Loan> loans;
 }

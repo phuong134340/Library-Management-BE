@@ -11,7 +11,6 @@ import java.time.Instant;
 @Data
 public class UpdateBookResponse {
     long id;
-    Long authorId;
     String name;
     Category category;
     Author author;
