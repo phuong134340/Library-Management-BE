@@ -32,6 +32,6 @@ public class Category {
     @LastModifiedDate
     @Column(name = "updated_at")
     private Instant updatedAt;
-    @OneToMany(mappedBy = "category")
-    private List<Book> books;
+//    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
+//    private List<Book> books;
 }

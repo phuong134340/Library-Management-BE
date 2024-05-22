@@ -20,13 +20,14 @@ import java.util.List;
 public class Reader {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private String id;
+    private long id;
     @Column(name = "reader_name")
     private String name;
     @Column(name = "fullname")
     private String fullName;
-    @Column(name = "type")
-    private String readerType;
+    @ManyToOne
+    @JoinColumn(name = "reader_type_id")
+    private Reader_Type readerType;
     @Column(name = "date_of_birth")
     private Instant dateOfBirth;
     @Column(name = "address")
@@ -45,6 +46,6 @@ public class Reader {
     @LastModifiedDate
     @Column(name = "updated_at")
     private Instant updatedAt;
-    @OneToMany(mappedBy = "reader")
-    private List<Loan> loans;
+//    @OneToMany(mappedBy = "reader",fetch = FetchType.LAZY)
+//    private List<Loan> loans;
 }

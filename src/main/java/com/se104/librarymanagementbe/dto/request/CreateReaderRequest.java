@@ -10,7 +10,7 @@ import java.time.Instant;
 public class CreateReaderRequest {
     String name;
     String fullName;
-    String readerType;
+    long readerTypeId;
     Instant dateOfBirth;
     String email;
     String phoneNumber;

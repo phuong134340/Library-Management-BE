@@ -7,7 +7,10 @@ import java.time.Instant;
 
 @NoArgsConstructor
 @Data
-public class UpdateLoanRequest {
+public class UpdateRentRequest {
+    long bookId;
+    long readerId;
     Instant startDate;
     Instant endDate;
+    String status;
 }

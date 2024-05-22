@@ -93,7 +93,7 @@ public class BookService {
                 }
             }
             if(book.getAuthorId() != 0){
-                Optional<Author> author = authorRepository.findById(book.getCategoryId());
+                Optional<Author> author = authorRepository.findById(book.getAuthorId());
                 if(author.isEmpty()){
                     return null;
                 }else{

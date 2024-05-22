@@ -28,6 +28,6 @@ public class Author {
     private String address;
     @Column(name = "number_of_books")
     private long number;
-    @OneToMany(mappedBy = "author")
-    private List<Book> books;
+//    @OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
+//    private List<Book> books;
 }

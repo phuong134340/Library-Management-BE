@@ -37,6 +37,6 @@ public class Book {
     @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
-    @OneToMany(mappedBy = "book")
-    private List<Loan> loans;
+//    @OneToMany(mappedBy = "book",fetch = FetchType.LAZY)
+//    private List<Loan> loans;
 }

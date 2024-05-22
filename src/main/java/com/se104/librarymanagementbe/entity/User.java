@@ -29,6 +29,6 @@ public class User {
     @CreatedDate
     @Column(name = "create_at")
     private Instant createdAt;
-//    @OneToMany(mappedBy = "user")
+//    @OneToMany(mappedBy = "users")
 //    private List<Loan> loans;
 }
