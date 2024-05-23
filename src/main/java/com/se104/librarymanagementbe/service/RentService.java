@@ -37,6 +37,7 @@ public class RentService {
         Optional<Rent> rent = rentRepository.findById(id);
         if (rent.isPresent()) {
             GetOneRentResponse res = mapper.map(rent, GetOneRentResponse.class);
+//            res.setBookId(rent.get().getBook().getBookId());
             return RestResponse.<GetOneRentResponse>builder()
                     .status(HttpStatus.OK.value())
                     .data(res)

@@ -12,7 +12,8 @@ import java.time.Instant;
 public class GetOneRentResponse {
     long id;
 //    Book book;
-    Reader reader;
+//    Reader reader;
+    long bookId;
     Instant startDate;
     Instant endDate;
     String status;

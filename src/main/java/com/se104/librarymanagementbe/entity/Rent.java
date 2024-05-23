@@ -34,7 +34,7 @@ public class Rent {
     @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "return_book_id")
     private Return_Book returnBook;
 }
