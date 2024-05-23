@@ -1,4 +1,4 @@
-package com.se104.librarymanagementbe.dto.request;
+package com.se104.librarymanagementbe.dto.response;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

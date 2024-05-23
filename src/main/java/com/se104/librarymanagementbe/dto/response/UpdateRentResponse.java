@@ -11,8 +11,9 @@ import java.time.Instant;
 @Data
 public class UpdateRentResponse {
     long id;
-    Book bookId;
-    Reader readerId;
+    Book book;
+    Reader reader;
     Instant startDate;
     Instant endDate;
+    String status;
 }

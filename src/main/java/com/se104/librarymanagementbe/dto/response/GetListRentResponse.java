@@ -11,8 +11,8 @@ import java.time.Instant;
 @Data
 public class GetListRentResponse {
     long id;
-    Book bookId;
-    Reader readerId;
+    Book book;
+    Reader reader;
     Instant startDate;
     Instant endDate;
     String status;

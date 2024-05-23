@@ -17,7 +17,7 @@ public class RentController {
     @Autowired
     private RentService rentService;
     @PostMapping
-    public ResponseEntity<RestResponse<CreateRentResponse>> createRent(@RequestBody CreateRentRequest book, CreateRentRequest rent) {
+    public ResponseEntity<RestResponse<CreateRentResponse>> createRent(@RequestBody CreateRentRequest rent) {
         return ResponseEntity.ok().body(rentService.createRent(rent));
     }
     @GetMapping
