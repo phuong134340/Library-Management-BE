@@ -3,10 +3,7 @@ package com.se104.librarymanagementbe.service;
 import com.se104.librarymanagementbe.common.RestResponse;
 import com.se104.librarymanagementbe.dto.request.CreateRentRequest;
 import com.se104.librarymanagementbe.dto.request.UpdateRentRequest;
-import com.se104.librarymanagementbe.dto.response.CreateRentResponse;
-import com.se104.librarymanagementbe.dto.response.GetListRentResponse;
-import com.se104.librarymanagementbe.dto.response.GetOneRentResponse;
-import com.se104.librarymanagementbe.dto.response.UpdateRentResponse;
+import com.se104.librarymanagementbe.dto.response.*;
 import com.se104.librarymanagementbe.entity.Book;
 import com.se104.librarymanagementbe.entity.ConfigLibrary;
 import com.se104.librarymanagementbe.entity.Reader;
@@ -35,13 +32,14 @@ public class RentService {
     private final ModelMapper mapper;
     private final BookRepository bookRepository;
     private final ReaderRepository readerRepository;
-    private final ConfigLibrary configLibrary;
+    private final ConfigLibraryService configLibraryService;
 
     public RestResponse<GetOneRentResponse> getOneRent(Long id) {
         Optional<Rent> rent = rentRepository.findById(id);
         if (rent.isPresent()) {
             GetOneRentResponse res = mapper.map(rent, GetOneRentResponse.class);
             res.setBookId(rent.get().getBook().getId());
+            res.setReaderId(rent.get().getReader().getId());
             return RestResponse.<GetOneRentResponse>builder()
                     .status(HttpStatus.OK.value())
                     .data(res)
@@ -54,7 +52,7 @@ public class RentService {
 
     public RestResponse<CreateRentResponse> createRent(CreateRentRequest rent) {
         Optional<Book> book = bookRepository.findById(rent.getBookId());
-        if(rent.getStatus() != "rented" || rent.getStatus() != "returned"){
+        if(rent.getStatus() != "rented" && rent.getStatus() != "returned"){
             return null;
         }
         if(book.isEmpty()){
@@ -65,7 +63,8 @@ public class RentService {
             return null;
         }
         List<Rent> totalRent = rentRepository.findAllByReaderIdAndStatusIs(rent.getReaderId(), rent.getStatus());
-        if(totalRent.size()  >= configLibrary.getLimitBook() ){
+        GetOneConfigLibraryResponse lastConfig = configLibraryService.getLastConfig();
+        if(totalRent.size()  >= lastConfig.getLimitBook() ){
             return null;
         }
         Rent newRent = mapper.map(rent, Rent.class);
@@ -82,9 +81,7 @@ public class RentService {
         Optional<Rent> oldRent = rentRepository.findById(id);
 
         if (oldRent.isPresent()) {
-            if(rent.getStatus() != "rented" || rent.getStatus() != "returned"){
-                return null;
-            }
+
             if(rent.getBookId() != 0){
                 Optional<Book> book = bookRepository.findById(rent.getBookId());
                 if(book.isEmpty()){
@@ -108,6 +105,9 @@ public class RentService {
                 oldRent.get().setEndDate(rent.getStartDate());
             }
             if(rent.getStatus() != null){
+                if(rent.getStatus() != "rented" && rent.getStatus() != "returned"){
+                return null;
+            }
                 oldRent.get().setStatus(rent.getStatus());
             }
             rentRepository.save(oldRent.get());
