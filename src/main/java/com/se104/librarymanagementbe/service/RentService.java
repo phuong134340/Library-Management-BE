@@ -8,9 +8,11 @@ import com.se104.librarymanagementbe.dto.response.GetListRentResponse;
 import com.se104.librarymanagementbe.dto.response.GetOneRentResponse;
 import com.se104.librarymanagementbe.dto.response.UpdateRentResponse;
 import com.se104.librarymanagementbe.entity.Book;
+import com.se104.librarymanagementbe.entity.ConfigLibrary;
 import com.se104.librarymanagementbe.entity.Reader;
 import com.se104.librarymanagementbe.entity.Rent;
 import com.se104.librarymanagementbe.repository.BookRepository;
+import com.se104.librarymanagementbe.repository.ConfigLibraryRepository;
 import com.se104.librarymanagementbe.repository.ReaderRepository;
 import com.se104.librarymanagementbe.repository.RentRepository;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.text.CollationElementIterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,12 +35,13 @@ public class RentService {
     private final ModelMapper mapper;
     private final BookRepository bookRepository;
     private final ReaderRepository readerRepository;
+    private final ConfigLibrary configLibrary;
 
     public RestResponse<GetOneRentResponse> getOneRent(Long id) {
         Optional<Rent> rent = rentRepository.findById(id);
         if (rent.isPresent()) {
             GetOneRentResponse res = mapper.map(rent, GetOneRentResponse.class);
-//            res.setBookId(rent.get().getBook().getBookId());
+            res.setBookId(rent.get().getBook().getId());
             return RestResponse.<GetOneRentResponse>builder()
                     .status(HttpStatus.OK.value())
                     .data(res)
@@ -50,6 +54,9 @@ public class RentService {
 
     public RestResponse<CreateRentResponse> createRent(CreateRentRequest rent) {
         Optional<Book> book = bookRepository.findById(rent.getBookId());
+        if(rent.getStatus() != "rented" || rent.getStatus() != "returned"){
+            return null;
+        }
         if(book.isEmpty()){
             return null;
         }
@@ -57,10 +64,10 @@ public class RentService {
         if(reader.isEmpty()){
             return null;
         }
-//        List<Rent> totalRent = rentRepository.findAllByReaderIdAndStatusIs(rent.getReaderId(), rent.getStatus());
-//        if(totalRent > ConfigLibrary.getLimitBook() ){
-//            return null;
-//        }
+        List<Rent> totalRent = rentRepository.findAllByReaderIdAndStatusIs(rent.getReaderId(), rent.getStatus());
+        if(totalRent.size()  >= configLibrary.getLimitBook() ){
+            return null;
+        }
         Rent newRent = mapper.map(rent, Rent.class);
         newRent.setBook(book.get());
         newRent.setReader(reader.get());
@@ -73,7 +80,11 @@ public class RentService {
 
     public RestResponse<UpdateRentResponse> updateRent(UpdateRentRequest rent, Long id) {
         Optional<Rent> oldRent = rentRepository.findById(id);
+
         if (oldRent.isPresent()) {
+            if(rent.getStatus() != "rented" || rent.getStatus() != "returned"){
+                return null;
+            }
             if(rent.getBookId() != 0){
                 Optional<Book> book = bookRepository.findById(rent.getBookId());
                 if(book.isEmpty()){
@@ -116,11 +127,16 @@ public class RentService {
     public RestResponse<List<GetListRentResponse>> getListRents() {
         List<Rent> rents = rentRepository.findAll();
 
+        List<GetListRentResponse> rentsResponse = new ArrayList<GetListRentResponse>();
+        for (int i = 0; i < rents.size(); i++) {
+            GetListRentResponse rent = mapper.map(rents.get(i), GetListRentResponse.class);
+            rent.setBookId(rents.get(i).getBook().getId());
+            rent.setReaderId(rents.get(i).getReader().getId());
+        }
+
         return RestResponse.<List<GetListRentResponse>>builder()
                 .status(HttpStatus.OK.value())
-                .data(rents.stream()
-                        .map(user -> mapper.map(rents, GetListRentResponse.class))
-                        .collect(Collectors.toList()))
+                .data(rentsResponse)
                 .build();
     }
 }
