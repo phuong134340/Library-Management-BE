@@ -28,10 +28,10 @@ public class RentController {
     public ResponseEntity<RestResponse<GetOneRentResponse>> getOneRent(@PathVariable Long id) {
         return ResponseEntity.ok().body(rentService.getOneRent(id));
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<RestResponse<UpdateRentResponse>> updateRent(@RequestBody UpdateRentRequest rent, @PathVariable Long id) {
-        return ResponseEntity.ok().body(rentService.updateRent(rent, id));
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<RestResponse<UpdateRentResponse>> updateRent(@RequestBody UpdateRentRequest rent, @PathVariable Long id) {
+//        return ResponseEntity.ok().body(rentService.updateRent(rent, id));
+//   }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRent(@PathVariable Long id) {
         rentService.deleteRent(id);

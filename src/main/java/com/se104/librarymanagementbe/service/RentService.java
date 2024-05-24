@@ -62,9 +62,13 @@ public class RentService {
         if(reader.isEmpty()){
             return null;
         }
-        List<Rent> totalRent = rentRepository.findAllByReaderIdAndStatusIs(rent.getReaderId(), rent.getStatus());
+        List<Rent> totalRent = rentRepository.findAllByReaderIdAndStatus(rent.getReaderId(), rent.getStatus());
         GetOneConfigLibraryResponse lastConfig = configLibraryService.getLastConfig();
         if(totalRent.size()  >= lastConfig.getLimitBook() ){
+            return null;
+        }
+        List<Rent> bookRent = rentRepository.findAllByBookIdAndStatus(rent.getBookId(), rent.getStatus());
+        if(bookRent.size() > 0){
             return null;
         }
         Rent newRent = mapper.map(rent, Rent.class);
@@ -77,48 +81,48 @@ public class RentService {
                 .build();
     }
 
-    public RestResponse<UpdateRentResponse> updateRent(UpdateRentRequest rent, Long id) {
-        Optional<Rent> oldRent = rentRepository.findById(id);
-
-        if (oldRent.isPresent()) {
-
-            if(rent.getBookId() != 0){
-                Optional<Book> book = bookRepository.findById(rent.getBookId());
-                if(book.isEmpty()){
-                    return null;
-                }else{
-                    oldRent.get().setBook(book.get());
-                }
-            }
-            if(rent.getReaderId() != 0){
-                Optional<Reader> reader = readerRepository.findById(rent.getReaderId());
-                if(reader.isEmpty()){
-                    return null;
-                }else{
-                    oldRent.get().setReader(reader.get());
-                }
-            }
-            if(rent.getStartDate() != null){
-                oldRent.get().setStartDate(rent.getStartDate());
-            }
-            if(rent.getEndDate() != null){
-                oldRent.get().setEndDate(rent.getStartDate());
-            }
-            if(rent.getStatus() != null){
-                if(rent.getStatus() != "rented" && rent.getStatus() != "returned"){
-                return null;
-            }
-                oldRent.get().setStatus(rent.getStatus());
-            }
-            rentRepository.save(oldRent.get());
-            return RestResponse.<UpdateRentResponse>builder()
-                    .status(HttpStatus.OK.value())
-                    .data(mapper.map(oldRent, UpdateRentResponse.class))
-                    .build();
-        } else {
-            return null;
-        }
-    }
+//    public RestResponse<UpdateRentResponse> updateRent(UpdateRentRequest rent, Long id) {
+//        Optional<Rent> oldRent = rentRepository.findById(id);
+//
+//        if (oldRent.isPresent()) {
+//
+//            if(rent.getBookId() != 0){
+//                Optional<Book> book = bookRepository.findById(rent.getBookId());
+//                if(book.isEmpty()){
+//                    return null;
+//                }else{
+//                    oldRent.get().setBook(book.get());
+//                }
+//            }
+//            if(rent.getReaderId() != 0){
+//                Optional<Reader> reader = readerRepository.findById(rent.getReaderId());
+//                if(reader.isEmpty()){
+//                    return null;
+//                }else{
+//                    oldRent.get().setReader(reader.get());
+//                }
+//            }
+//            if(rent.getStartDate() != null){
+//                oldRent.get().setStartDate(rent.getStartDate());
+//            }
+//            if(rent.getEndDate() != null){
+//                oldRent.get().setEndDate(rent.getStartDate());
+//            }
+//            if(rent.getStatus() != null){
+//                if(rent.getStatus() != "rented" && rent.getStatus() != "returned"){
+//                return null;
+//            }
+//                oldRent.get().setStatus(rent.getStatus());
+//            }
+//            rentRepository.save(oldRent.get());
+//            return RestResponse.<UpdateRentResponse>builder()
+//                    .status(HttpStatus.OK.value())
+//                    .data(mapper.map(oldRent, UpdateRentResponse.class))
+//                    .build();
+//        } else {
+//            return null;
+//        }
+//    }
 
     public void deleteRent(Long id) {
         rentRepository.deleteById(id);

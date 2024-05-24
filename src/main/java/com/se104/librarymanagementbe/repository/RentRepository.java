@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface RentRepository extends JpaRepository<Rent, Long> {
-    List<Rent> findAllByReaderIdAndStatusIs(long readerId, String status);
+    List<Rent> findAllByReaderIdAndStatus(long readerId, String status);
+    List<Rent> findAllByBookIdAndStatus(long bookId, String status);
 }
