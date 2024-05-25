@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 public class CreateFineRequest {
     String name;
     long total;
-    long money;
-    long change;
+    long proceeds;
+    long owed;
 }

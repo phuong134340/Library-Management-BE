@@ -9,6 +9,6 @@ public class GetListFineResponse {
     long id;
     String name;
     long total;
-    long money;
-    long change;
+    long proceeds;
+    long owed;
 }

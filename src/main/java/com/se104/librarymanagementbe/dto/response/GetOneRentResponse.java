@@ -14,6 +14,5 @@ public class GetOneRentResponse {
     long bookId;
     long readerId;
     Instant startDate;
-    Instant endDate;
     String status;
 }

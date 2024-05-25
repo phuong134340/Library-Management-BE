@@ -11,6 +11,5 @@ public class CreateRentRequest {
     long bookId;
     long readerId;
     Instant startDate;
-    Instant endDate;
     String status;
 }

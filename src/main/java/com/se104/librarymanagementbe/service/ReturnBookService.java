@@ -62,7 +62,7 @@ public class ReturnBookService {
             Optional<Fine> fine = fineRepository.findById(returnBook.getRentIds().get(i));
             Optional<Rent> rent = rentRepository.findById( returnBook.getRentIds().get(i) );
             rent = rentRepository.findById(returnBook.getRentIds().get(i));
-            if(!rent.isEmpty()){
+            if(!rent.isEmpty() && rent.get().getStatus().equals("rented")){
                 fine = fineRepository.findOneByReaderId(rent.get().getReader().getId());
                 Instant rentDay = rent.get().getStartDate();
                 Instant returnDay = returnBook.getReturnDate();
@@ -74,6 +74,7 @@ public class ReturnBookService {
                 }
                 if(!fine.isEmpty()){
                     fine.get().setTotal( fine.get().getTotal() + dayDelay*1000 );
+                    fineRepository.save(fine.get());
                 }else{
                     Fine newFine = new Fine();
                     newFine.setTotal(dayDelay*1000);
@@ -108,7 +109,6 @@ public class ReturnBookService {
                 .data(response)
                 .build();
     }
-
 
 //    public void deleteReturnBook(Long id) {
 //        returnBookRepository.deleteById(id);

@@ -32,8 +32,6 @@ public class Rent {
     private Reader reader;
     @Column(name = "start_date")
     private Instant startDate;
-    @Column(name = "end_date")
-    private Instant endDate;
     @Column(name = "status")
     private String status;
     @CreatedDate

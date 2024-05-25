@@ -11,6 +11,5 @@ public class UpdateRentRequest {
     long bookId;
     long readerId;
     Instant startDate;
-    Instant endDate;
     String status;
 }

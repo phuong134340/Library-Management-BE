@@ -14,6 +14,5 @@ public class CreateRentResponse {
     Book book;
     Reader reader;
     Instant startDate;
-    Instant endDate;
     String status;
 }
