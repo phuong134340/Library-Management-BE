@@ -62,10 +62,10 @@ public class FineService {
                 oldFine.get().setTotal(fine.getTotal());
             }
             if(fine.getMoney() != 0){
-                oldFine.get().setMoney(fine.getMoney());
+                oldFine.get().setProceeds(fine.getMoney());
             }
             if(fine.getChange() != 0){
-                oldFine.get().setChange(fine.getChange());
+                oldFine.get().setOwed(fine.getChange());
             }
             fineRepository.save(oldFine.get());
             return RestResponse.<UpdateFineResponse>builder()

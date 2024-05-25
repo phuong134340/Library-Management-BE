@@ -21,14 +21,14 @@ public class Fine {
     )
     @Id
     private long id;
-    @Column(name = "reader_name")
+    @Column(name = "reader")
     private String name;
     @Column(name = "total")
     private long total;
-    @Column(name = "money")
-    private long money;
-    @Column(name = "change")
-    private long change;
+    @Column(name = "proceeds")
+    private long proceeds;
+    @Column(name = "owed")
+    private long owed;
     @OneToOne
     @JoinColumn(name = "reader_id", referencedColumnName = "id")
     private Reader reader;
