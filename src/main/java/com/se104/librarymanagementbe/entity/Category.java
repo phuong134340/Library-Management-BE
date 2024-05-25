@@ -21,7 +21,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_seq")
+    @SequenceGenerator(
+            name = "categories_seq",
+            sequenceName = "categories_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @Column(name = "name")

@@ -3,7 +3,9 @@ package com.se104.librarymanagementbe.service;
 import com.se104.librarymanagementbe.common.RestResponse;
 import com.se104.librarymanagementbe.dto.request.CreateReturnBookRequest;
 import com.se104.librarymanagementbe.dto.response.*;
+import com.se104.librarymanagementbe.entity.Rent;
 import com.se104.librarymanagementbe.entity.Return_Book;
+import com.se104.librarymanagementbe.repository.RentRepository;
 import com.se104.librarymanagementbe.repository.ReturnBookRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,17 +16,23 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 @AllArgsConstructor
 
 public class ReturnBookService {
     private final ReturnBookRepository returnBookRepository;
     private final ModelMapper mapper;
+    private final RentRepository rentRepository;
 
     public RestResponse<GetOneReturnBookResponse> getOneReturnBook(Long id) {
         Optional<Return_Book> returnBook = returnBookRepository.findById(id);
+        List<Rent> rents = rentRepository.findAllByReturnBookId(id);
         if (returnBook.isPresent()) {
             GetOneReturnBookResponse res = mapper.map(returnBook, GetOneReturnBookResponse.class);
+            for(int i = 0; i < rents.size(); i++) { res.getRentIds().add( rents.get(i).getId() );}
+
             return RestResponse.<GetOneReturnBookResponse>builder()
                     .status(HttpStatus.OK.value())
                     .data(res)
@@ -36,10 +44,18 @@ public class ReturnBookService {
 
 
     public RestResponse<CreateReturnBookResponse> createReturnBook(CreateReturnBookRequest returnBook) {
-        Return_Book res = returnBookRepository.save(mapper.map(returnBook, Return_Book.class));
+        Return_Book newReturnBook = mapper.map(returnBook, Return_Book.class);
+        returnBookRepository.save(newReturnBook);
+        for(int i = 0; i < returnBook.getRentIds().size(); i++){
+            Optional<Rent> rent = rentRepository.findById( returnBook.getRentIds().get(i) );
+            rent.get().setStatus("returned");
+            rent.get().setReturnBook(newReturnBook);
+            rentRepository.save(rent.get());
+
+        }
         return RestResponse.<CreateReturnBookResponse>builder()
                 .status(HttpStatus.CREATED.value())
-                .data(mapper.map(res, CreateReturnBookResponse.class))
+                .data(mapper.map(newReturnBook, CreateReturnBookResponse.class))
                 .build();
     }
 
@@ -55,7 +71,7 @@ public class ReturnBookService {
     }
 
 
-    public void deleteReturnBook(Long id) {
-        returnBookRepository.deleteById(id);
-    }
+//    public void deleteReturnBook(Long id) {
+//        returnBookRepository.deleteById(id);
+//    }
 }

@@ -19,7 +19,12 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConfigLibrary {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "configLibrary_seq")
+    @SequenceGenerator(
+            name = "configLibrary_seq",
+            sequenceName = "configLibrary_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @Column(name = "age_max")

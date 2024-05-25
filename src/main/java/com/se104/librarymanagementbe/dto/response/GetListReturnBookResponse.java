@@ -11,6 +11,4 @@ public class GetListReturnBookResponse {
     long id;
     String name;
     Instant returnDate;
-    long fine;
-    long number;
 }

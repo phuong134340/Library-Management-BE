@@ -17,7 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Return_Book {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "returnBook_seq")
+    @SequenceGenerator(
+            name = "returnBook_seq",
+            sequenceName = "returnBook_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @Column(name = "reader_name")
@@ -25,10 +30,6 @@ public class Return_Book {
     @Column(name = "return_date")
     @CreatedDate
     private Instant returnDate;
-    @Column(name = "fine")
-    private long fine;
-    @Column(name = "number_of_day")
-    private long number;
 //    @OneToMany(mappedBy = "return_book")
 //    private List<Loan> loans;
 }

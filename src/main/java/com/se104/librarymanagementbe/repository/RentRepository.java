@@ -10,4 +10,5 @@ import java.util.List;
 public interface RentRepository extends JpaRepository<Rent, Long> {
     List<Rent> findAllByReaderIdAndStatus(long readerId, String status);
     List<Rent> findAllByBookIdAndStatus(long bookId, String status);
+    List<Rent> findAllByReturnBookId(long returnBookId);
 }

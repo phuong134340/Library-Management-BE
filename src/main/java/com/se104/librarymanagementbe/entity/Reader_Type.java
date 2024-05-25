@@ -13,7 +13,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reader_Type {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "readerType_seq")
+    @SequenceGenerator(
+            name = "readerType_seq",
+            sequenceName = "readerType_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @Column(name = "name")

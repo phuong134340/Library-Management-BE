@@ -13,7 +13,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Fine {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fine_seq")
+    @SequenceGenerator(
+            name = "fine_seq",
+            sequenceName = "fine_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @Column(name = "reader_name")

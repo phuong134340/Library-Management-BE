@@ -17,7 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_seq")
+    @SequenceGenerator(
+            name = "books_seq",
+            sequenceName = "books_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @Column(name = "name")

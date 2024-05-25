@@ -30,9 +30,9 @@ public class ReturnBookController {
         return ResponseEntity.ok().body(returnBookService.getOneReturnBook(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReturnBook (@PathVariable Long id){
-        returnBookService.deleteReturnBook(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteReturnBook (@PathVariable Long id){
+//        returnBookService.deleteReturnBook(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

@@ -52,7 +52,7 @@ public class RentService {
 
     public RestResponse<CreateRentResponse> createRent(CreateRentRequest rent) {
         Optional<Book> book = bookRepository.findById(rent.getBookId());
-        if(rent.getStatus() != "rented" && rent.getStatus() != "returned"){
+        if(!rent.getStatus().equals("rented") && !rent.getStatus().equals("returned")){
             return null;
         }
         if(book.isEmpty()){
@@ -64,6 +64,9 @@ public class RentService {
         }
         List<Rent> totalRent = rentRepository.findAllByReaderIdAndStatus(rent.getReaderId(), rent.getStatus());
         GetOneConfigLibraryResponse lastConfig = configLibraryService.getLastConfig();
+        System.out.println("-----------");
+        System.out.println(totalRent.size());
+        System.out.println(lastConfig.getLimitBook());
         if(totalRent.size()  >= lastConfig.getLimitBook() ){
             return null;
         }
@@ -136,6 +139,7 @@ public class RentService {
             GetListRentResponse rent = mapper.map(rents.get(i), GetListRentResponse.class);
             rent.setBookId(rents.get(i).getBook().getId());
             rent.setReaderId(rents.get(i).getReader().getId());
+            rentsResponse.add(rent);
         }
 
         return RestResponse.<List<GetListRentResponse>>builder()

@@ -18,7 +18,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reader {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "readers_seq")
+    @SequenceGenerator(
+            name = "readers_seq",
+            sequenceName = "readers_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @Column(name = "reader_name")

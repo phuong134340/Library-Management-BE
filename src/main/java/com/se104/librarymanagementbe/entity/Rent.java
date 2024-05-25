@@ -16,7 +16,12 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Rent {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rents_seq")
+    @SequenceGenerator(
+            name = "rents_seq",
+            sequenceName = "rents_seq",
+            allocationSize = 1
+    )
     @Id
     private long id;
     @ManyToOne(fetch = FetchType.LAZY)
