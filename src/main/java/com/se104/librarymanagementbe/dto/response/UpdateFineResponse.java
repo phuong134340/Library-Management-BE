@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UpdateFineResponse {
     long id;
-    String name;
     long total;
     long proceeds;
     long owed;

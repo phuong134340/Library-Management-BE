@@ -28,7 +28,6 @@ public class Return_Book {
     @Column(name = "reader_name")
     private String name;
     @Column(name = "return_date")
-    @CreatedDate
     private Instant returnDate;
 //    @OneToMany(mappedBy = "return_book")
 //    private List<Loan> loans;

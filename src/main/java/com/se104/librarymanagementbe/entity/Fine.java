@@ -21,8 +21,6 @@ public class Fine {
     )
     @Id
     private long id;
-    @Column(name = "reader")
-    private String name;
     @Column(name = "total")
     private long total;
     @Column(name = "proceeds")

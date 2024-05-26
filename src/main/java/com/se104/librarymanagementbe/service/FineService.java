@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,12 +23,15 @@ public class FineService {
 
     public RestResponse<List<GetListFineResponse>> getListFines() {
         List<Fine> fines = fineRepository.findAll();
-
+        List<GetListFineResponse> finesResponse = new ArrayList<GetListFineResponse>();
+        for (int i = 0; i < fines.size(); i++) {
+            GetListFineResponse fine = mapper.map(fines.get(i), GetListFineResponse.class);
+            fine.setReaderId(fines.get(i).getReader().getId());
+            finesResponse.add(fine);
+        }
         return RestResponse.<List<GetListFineResponse>>builder()
                 .status(HttpStatus.OK.value())
-                .data(fines.stream()
-                        .map(fine -> mapper.map(fine, GetListFineResponse.class))
-                        .collect(Collectors.toList()))
+                .data(finesResponse)
                 .build();
     }
 
@@ -35,6 +39,7 @@ public class FineService {
         Optional<Fine> fine = fineRepository.findById(id);
         if (fine.isPresent()) {
             GetOneFineResponse res = mapper.map(fine, GetOneFineResponse.class);
+            res.setReaderId(fine.get().getReader().getId());
             return RestResponse.<GetOneFineResponse>builder()
                     .status(HttpStatus.OK.value())
                     .data(res)
@@ -55,17 +60,10 @@ public class FineService {
     public RestResponse<UpdateFineResponse> updateFine(UpdateFineRequest fine, Long id) {
         Optional<Fine> oldFine = fineRepository.findById(id);
         if (oldFine.isPresent()) {
-            if(fine.getName() != null){
-                oldFine.get().setName(fine.getName());
-            }
-            if(fine.getTotal() != 0){
-                oldFine.get().setTotal(fine.getTotal());
-            }
             if(fine.getProceeds() != 0){
-                oldFine.get().setProceeds(fine.getProceeds());
-            }
-            if(fine.getOwed() != 0){
-                oldFine.get().setOwed(fine.getOwed());
+                if(oldFine.get().getProceeds() + fine.getProceeds() <= oldFine.get().getTotal()){
+                    oldFine.get().setProceeds( oldFine.get().getProceeds() + fine.getProceeds() );
+                }
             }
             fineRepository.save(oldFine.get());
             return RestResponse.<UpdateFineResponse>builder()

@@ -69,6 +69,14 @@ public class ReturnBookService {
                 Duration duration = Duration.between(rentDay, returnDay);
                 long daysBetween = duration.toDays();
                 long dayDelay = 0;
+                System.out.println("-------------");
+                System.out.println(daysBetween);
+                System.out.println(lastConfig.getDayMax());
+
+                System.out.println(rentDay.toString());
+                System.out.println(returnDay.toString());
+                System.out.println("-------------");
+
                 if(daysBetween - lastConfig.getDayMax() > 0){
                     dayDelay = daysBetween - lastConfig.getDayMax();
                 }

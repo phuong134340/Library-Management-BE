@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class GetListFineResponse {
     long id;
-    String name;
+    long readerId;
     long total;
     long proceeds;
     long owed;

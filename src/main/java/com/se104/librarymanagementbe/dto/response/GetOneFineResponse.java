@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class GetOneFineResponse {
     long id;
-    String name;
+    long readerId;
     long total;
     long proceeds;
     long owed;
