@@ -31,7 +31,7 @@ public class FineController {
     }
     @GetMapping(value = "/reader/{readerId}")
     public ResponseEntity<RestResponse<GetOneFineResponse>> getOneFineByReaderId(@PathVariable Long readerId){
-        return ResponseEntity.ok().body(fineService.getOneFine(readerId));
+        return ResponseEntity.ok().body(fineService.getOneFineByReaderId(readerId));
     }
 
     @PutMapping("/{id}")
