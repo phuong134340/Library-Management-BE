@@ -72,7 +72,7 @@ public class ReturnBookService {
                 System.out.println("-------------");
                 System.out.println(daysBetween);
                 System.out.println(lastConfig.getDayMax());
-
+                System.out.println(i);
                 System.out.println(rentDay.toString());
                 System.out.println(returnDay.toString());
                 System.out.println("-------------");
