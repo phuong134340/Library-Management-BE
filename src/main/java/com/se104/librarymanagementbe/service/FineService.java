@@ -49,7 +49,7 @@ public class FineService {
         }
     }
     public RestResponse<GetOneFineResponse> getOneFineByReaderId(long readerId){
-        Optional<Fine> fine = fineRepository.findById(readerId);
+        Optional<Fine> fine = fineRepository.findOneByReaderId(readerId);
         if (fine.isPresent()) {
             GetOneFineResponse res = mapper.map(fine, GetOneFineResponse.class);
             res.setReaderId(fine.get().getReader().getId());
