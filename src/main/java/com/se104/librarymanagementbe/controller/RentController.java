@@ -37,7 +37,7 @@ public class RentController {
         rentService.deleteRent(id);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping(value = "/{readerId}")
+    @GetMapping(value = "/reader/{readerId}")
     public ResponseEntity<RestResponse<List<GetListRentResponse>>> getListRentByReaderId(@PathVariable long readerId){
         return ResponseEntity.ok().body(rentService.getListRentByReaderId(readerId));
     }
