@@ -133,7 +133,21 @@ public class RentService {
 
     public RestResponse<List<GetListRentResponse>> getListRents() {
         List<Rent> rents = rentRepository.findAll();
+        List<GetListRentResponse> rentsResponse = new ArrayList<GetListRentResponse>();
+        for (int i = 0; i < rents.size(); i++) {
+            GetListRentResponse rent = mapper.map(rents.get(i), GetListRentResponse.class);
+            rent.setBookId(rents.get(i).getBook().getId());
+            rent.setReaderId(rents.get(i).getReader().getId());
+            rentsResponse.add(rent);
+        }
 
+        return RestResponse.<List<GetListRentResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .data(rentsResponse)
+                .build();
+    }
+    public RestResponse<List<GetListRentResponse>>getListRentByReaderId(long readerId){
+        List<Rent> rents = rentRepository.findAllByReaderId(readerId);
         List<GetListRentResponse> rentsResponse = new ArrayList<GetListRentResponse>();
         for (int i = 0; i < rents.size(); i++) {
             GetListRentResponse rent = mapper.map(rents.get(i), GetListRentResponse.class);

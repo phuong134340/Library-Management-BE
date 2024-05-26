@@ -29,7 +29,10 @@ public class FineController {
     public ResponseEntity<RestResponse<GetOneFineResponse>> getOneFine(@PathVariable Long id) {
         return ResponseEntity.ok().body(fineService.getOneFine(id));
     }
-
+    @GetMapping(value = "/{readerId}")
+    public ResponseEntity<RestResponse<GetOneFineResponse>> getOneFineByReaderId(@PathVariable Long readerId){
+        return ResponseEntity.ok().body(fineService.getOneFine(readerId));
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<RestResponse<UpdateFineResponse>> updateFine (@RequestBody UpdateFineRequest fine, @PathVariable Long id){

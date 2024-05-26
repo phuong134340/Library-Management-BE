@@ -48,6 +48,19 @@ public class FineService {
             return null;
         }
     }
+    public RestResponse<GetOneFineResponse> getOneFineByReaderId(long readerId){
+        Optional<Fine> fine = fineRepository.findById(readerId);
+        if (fine.isPresent()) {
+            GetOneFineResponse res = mapper.map(fine, GetOneFineResponse.class);
+            res.setReaderId(fine.get().getReader().getId());
+            return RestResponse.<GetOneFineResponse>builder()
+                    .status(HttpStatus.OK.value())
+                    .data(res)
+                    .build();
+        } else {
+            return null;
+        }
+    }
 
     public RestResponse<CreateFineResponse> createFine(CreateFineRequest fine) {
         Fine res = fineRepository.save(mapper.map(fine, Fine.class));
