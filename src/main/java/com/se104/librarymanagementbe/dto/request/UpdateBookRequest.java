@@ -16,4 +16,5 @@ public class UpdateBookRequest {
     Instant publishDate;
     String publisher;
     long price;
+    String description;
 }

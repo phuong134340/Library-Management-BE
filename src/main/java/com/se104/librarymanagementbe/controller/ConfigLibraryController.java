@@ -30,4 +30,8 @@ public class ConfigLibraryController {
     public ResponseEntity<RestResponse<List<GetListConfigLibraryResponse>>> getListConfigLibrary(){
         return ResponseEntity.ok().body(configLibraryService.getListConfigLibraries());
     }
+    @GetMapping(value = "/last/config")
+    public ResponseEntity<RestResponse<GetOneConfigLibraryResponse>> getLastConfigLibrary(){
+        return ResponseEntity.ok().body(configLibraryService.getLastConfigLibrary());
+    }
 }

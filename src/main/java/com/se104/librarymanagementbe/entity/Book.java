@@ -42,6 +42,8 @@ public class Book {
     @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
+    @Column(name = "description")
+    private String description;
 //    @OneToMany(mappedBy = "book",fetch = FetchType.LAZY)
 //    private List<Loan> loans;
 }

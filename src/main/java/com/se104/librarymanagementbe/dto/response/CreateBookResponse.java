@@ -17,4 +17,5 @@ public class CreateBookResponse {
     Instant publishDate;
     String publisher;
     long price;
+    String description;
 }

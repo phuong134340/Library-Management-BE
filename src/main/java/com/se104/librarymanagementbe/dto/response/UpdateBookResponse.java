@@ -17,4 +17,5 @@ public class UpdateBookResponse {
     Instant publishDate;
     String publisher;
     long price;
+    String description;
 }

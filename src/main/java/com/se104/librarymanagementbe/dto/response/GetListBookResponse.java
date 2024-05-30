@@ -14,4 +14,5 @@ public class GetListBookResponse {
     Author author;
     String publisher;
     long price;
+    String description;
 }

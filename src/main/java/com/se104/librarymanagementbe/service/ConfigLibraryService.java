@@ -70,4 +70,24 @@ public class ConfigLibraryService {
         }
         return res;
     }
+    public RestResponse<GetOneConfigLibraryResponse> getLastConfigLibrary(){
+        List<ConfigLibrary> listConfig = configLibraryRepository.findAllByOrderByCreatedAtDesc();
+        GetOneConfigLibraryResponse res = new GetOneConfigLibraryResponse();
+        if(!listConfig.isEmpty()) {
+            res = mapper.map(listConfig.get(0), GetOneConfigLibraryResponse.class);
+        }
+        else {
+            res.setAgeMin(18);
+            res.setAgeMax(55);
+            res.setCardValidity(6);
+            res.setDayMax(4);
+            res.setLimitBook(5);
+            res.setYearOfPublication(8);
+        }
+        return RestResponse.<GetOneConfigLibraryResponse>builder()
+                .status(HttpStatus.OK.value())
+                .data(res)
+                .build();
+    }
+
 }

@@ -15,4 +15,5 @@ public class CreateBookRequest {
     Instant publishDate;
     String publisher;
     long price;
+    String description;
 }
